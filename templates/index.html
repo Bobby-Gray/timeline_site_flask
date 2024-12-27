@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="events-container"></div>
+<div id="loading" style="text-align: center;">Loading...</div>
+<script>
+    let currentPage = 1;
+    let loading = false;
+
+    function fetchEvents() {
+        if (loading) return;
+        loading = true;
+        fetch(`/api/events?page=${currentPage}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('events-container');
+                data.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'event';
+                    eventDiv.innerHTML = `<h2>${event.title}</h2>
+                                          <p>${event.description}</p>
+                                          <small>${event.date}</small>`;
+                    container.appendChild(eventDiv);
+                });
+                if (data.length > 0) {
+                    currentPage++;
+                    loading = false;
+                } else {
+                    document.getElementById('loading').innerText = 'No more events.';
+                }
+            });
+    }
+
+    // Infinite scrolling
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            fetchEvents();
+        }
+    });
+
+    // Initial load
+    fetchEvents();
+</script>
+{% endblock %}
