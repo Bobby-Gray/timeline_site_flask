@@ -1,11 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="events-container"></div>
-<div id="loading" style="text-align: center;">Loading...</div>
+<div class="timeline" id="timeline">
+    <!-- Events are appended here -->
+</div>
+
 <script>
     let currentPage = 1;
     let loading = false;
+
+    function createEventHTML(event, index) {
+        /*
+         * Create a single event “card” for the timeline.
+         * Each event has an anchor we can link to using #event-{index}.
+         */
+        return `
+        <div class="timeline-event" id="event-${index}">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <h2>${event.title}</h2>
+                <p>${event.description}</p>
+                <small>${event.date}</small>
+            </div>
+        </div>
+        `;
+    }
 
     function fetchEvents() {
         if (loading) return;
@@ -13,21 +32,19 @@
         fetch(`/api/events?page=${currentPage}`)
             .then(response => response.json())
             .then(data => {
-                const container = document.getElementById('events-container');
-                data.forEach(event => {
-                    const eventDiv = document.createElement('div');
-                    eventDiv.className = 'event';
-                    eventDiv.innerHTML = `<h2>${event.title}</h2>
-                                          <p>${event.description}</p>
-                                          <small>${event.date}</small>`;
-                    container.appendChild(eventDiv);
-                });
-                if (data.length > 0) {
-                    currentPage++;
-                    loading = false;
-                } else {
+                const timeline = document.getElementById('timeline');
+                if (data.length === 0) {
                     document.getElementById('loading').innerText = 'No more events.';
+                    return;
                 }
+
+                data.forEach((event, i) => {
+                    const eventHTML = createEventHTML(event, (currentPage - 1) * 5 + i + 1);
+                    timeline.insertAdjacentHTML('beforeend', eventHTML);
+                });
+
+                currentPage++;
+                loading = false;
             });
     }
 
