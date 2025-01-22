@@ -1,9 +1,9 @@
 [
-    { "title": "Event 1", "description": "Description of event 1", "date": "2024-01-01" },
-    { "title": "Event 2", "description": "Description of event 2", "date": "2024-01-02" },
-    { "title": "Event 3", "description": "Description of event 3", "date": "2024-01-03" },
+    { "title": "Event 1", "description": "Description of event 1", "date": "2024-01-07" },
+    { "title": "Event 2", "description": "Description of event 2", "date": "2024-01-06" },
+    { "title": "Event 3", "description": "Description of event 3", "date": "2024-01-05" },
     { "title": "Event 4", "description": "Description of event 4", "date": "2024-01-04" },
-    { "title": "Event 5", "description": "Description of event 5", "date": "2024-01-05" },
-    { "title": "Event 6", "description": "Description of event 6", "date": "2024-01-06" },
-    { "title": "Event 7", "description": "Description of event 7", "date": "2024-01-07" }
+    { "title": "Event 5", "description": "Description of event 5", "date": "2024-01-03" },
+    { "title": "Event 6", "description": "Description of event 6", "date": "2024-01-02" },
+    { "title": "Event 7", "description": "Description of event 7", "date": "2024-01-01" }
 ]
